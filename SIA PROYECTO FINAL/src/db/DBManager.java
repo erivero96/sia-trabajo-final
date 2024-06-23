@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.sql.Statement;
 
 public class DBManager{
     private Connection connection;
@@ -65,7 +66,7 @@ public class DBManager{
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet result = statement.executeQuery();
             while (result.next()) {
-                lista.add(result.getString("DESCRIPCION"));
+                lista.add(result.getString("NOMBRE"));
             }
 
         } catch (SQLException e) {
@@ -84,8 +85,17 @@ public class DBManager{
             statement.setString(4, cheque.getConcepto());
             statement.setLong(5, cheque.getMaeProveedor());
             statement.setBigDecimal(6, cheque.getImporte());
+            // Create a new transaction record
+            insertarTransaccion(cheque.getTipoTransaccion());
+            // Get the ID of the newly created transaction record
+            long transactionId = obtenerIdUltimaTransaccion();
+            // Assign the transaction ID to the cheque
+            cheque.setTrsRegistroTransaccion(transactionId);
             statement.setLong(7, cheque.getTrsRegistroTransaccion());
             statement.setLong(8, cheque.getMaeEstatus());
+            statement.executeUpdate();
+
+            // Insert the cheque into the database
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -103,6 +113,45 @@ public class DBManager{
             e.printStackTrace();
         }
         return false;
+        }
+
+    public void insertarTransaccion(String nombreDocumento) {
+        int tipoDocumentoId = 0;
+        try {
+            String query = "SELECT \"PK_MAE_TIPO_DOCUMENTO\" FROM \"MAE_TIPO_DOCUMENTO\" WHERE \"NOMBRE\" = ?;";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, nombreDocumento);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                tipoDocumentoId = result.getInt("PK_MAE_TIPO_DOCUMENTO");
+                // Store the tipoDocumentoId in a variable or use it as needed
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            String query1 = "INSERT INTO \"TRS_REGISTRO_TRANSACCION\" (\"FK_TRS_REGISTRO_TRANSACCION_MAE_TIPO_DOCUMENTO\") VALUES (?);";
+            PreparedStatement statement1 = connection.prepareStatement(query1);
+            statement1.setInt(1, tipoDocumentoId);
+            statement1.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
+    public long obtenerIdUltimaTransaccion() {
+        long transactionId = 0;
+        try {
+            String query = "SELECT MAX(\"ID\") FROM \"TRS_REGISTRO_TRANSACCION\";";
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(query);
+            if (result.next()) {
+                transactionId = result.getLong(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return transactionId;
+    }
 }

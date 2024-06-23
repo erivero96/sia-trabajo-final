@@ -12,6 +12,7 @@ public class Cheque {
     private BigDecimal importe;
     private long trsRegistroTransaccion;
     private long maeEstatus;
+    private String tipoTransaccion;
 
     // Constructor
     public Cheque(Date fecha, long maeCuenta, int numero, String concepto, long maeProveedor, BigDecimal importe, long trsRegistroTransaccion, long maeEstatus) {
@@ -95,6 +96,14 @@ public class Cheque {
 
     public Boolean validarNoNulls() {
         return fecha != null && concepto != null && importe != null;
+    }
+
+    public String getTipoTransaccion() {
+        return tipoTransaccion;
+    }
+
+    public void setTipoTransaccion(String tipoTransaccion) {
+        this.tipoTransaccion = tipoTransaccion;
     }
     
 }

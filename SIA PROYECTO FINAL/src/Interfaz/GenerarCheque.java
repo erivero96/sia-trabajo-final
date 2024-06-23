@@ -227,25 +227,33 @@ public class GenerarCheque extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     Cheque cheque = new Cheque();
-    private void jComboBoxTipoOperacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTipoOperacionActionPerformed
+    private void jComboBoxTipoOperacionActionPerformed(java.awt.event.ActionEvent evt) {                                                       
         
     }
 
-    private void textFieldFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldFechaActionPerformed
+    private void textFieldFechaActionPerformed(java.awt.event.ActionEvent evt) {                                               
         String fecha = textFieldFecha.getText();
-        if (fecha.matches("\\d{4}-\\d{2}-\\d{2}")) {
-            cheque.setFecha(java.sql.Date.valueOf(fecha));
-        } else {
+        try {
+            java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date parsedDate = dateFormat.parse(fecha);
+            java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
+            cheque.setFecha(sqlDate);
+        } catch (java.text.ParseException e) {
             JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. El formato correcto es yyyy-MM-dd");
         }
     }
     
 
-    private void textFieldNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldNumeroActionPerformed
-        
+    private void textFieldNumeroActionPerformed(java.awt.event.ActionEvent evt) {                                                
+        String numero = textFieldNumero.getText();
+        if (numero.matches("\\d+")) {
+            cheque.setNumero(Integer.parseInt(numero));
+        } else {
+            JOptionPane.showMessageDialog(this, "Formato de número incorrecto. Solo se permiten números enteros");
+        }
     }
 
-    private void textFieldConceptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldConceptoActionPerformed
+    private void textFieldConceptoActionPerformed(java.awt.event.ActionEvent evt) {                                                  
         String concepto = textFieldConcepto.getText();
         if (concepto.length() > 0) {
             cheque.setConcepto(concepto);
@@ -254,7 +262,7 @@ public class GenerarCheque extends javax.swing.JFrame {
         }
     }
 
-    private void textFieldProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldProveedorActionPerformed
+    private void textFieldProveedorActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         String proveedor = textFieldProveedor.getText();
         int proveedorInt = Integer.parseInt(proveedor);
         if (dbManager.validarProveedorExiste(proveedorInt)) {
@@ -264,7 +272,7 @@ public class GenerarCheque extends javax.swing.JFrame {
         }
     }
 
-    private void textFieldImporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldImporteActionPerformed
+    private void textFieldImporteActionPerformed(java.awt.event.ActionEvent evt) {                                                 
         String importe = textFieldImporte.getText().replace(",", ".");
         if (importe.matches("\\d+(\\.\\d+)?")) {
             cheque.setImporte(new java.math.BigDecimal(importe));
@@ -273,24 +281,30 @@ public class GenerarCheque extends javax.swing.JFrame {
         }
     }
 
-    private void jComboBoxElegirCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxElegirCuentaActionPerformed
+    private void jComboBoxElegirCuentaActionPerformed(java.awt.event.ActionEvent evt) {                                                      
 
     }
 
-    private void jComboBoxEstatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEstatusActionPerformed
+    private void jComboBoxEstatusActionPerformed(java.awt.event.ActionEvent evt) {                                                 
 
     }
 
-    private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
-        cheque.setMaeCuenta(Long.parseLong(jComboBoxElegirCuenta.getSelectedItem().toString()));
-        cheque.setNumero(Integer.parseInt(textFieldNumero.getText()));
-        cheque.setConcepto(textFieldConcepto.getText());
-        cheque.setMaeProveedor(Long.parseLong(textFieldProveedor.getText()));
-        cheque.setImporte(new java.math.BigDecimal(textFieldImporte.getText()));
-        cheque.setTrsRegistroTransaccion(1);
-        cheque.setMaeEstatus(jComboBoxEstatus.getSelectedIndex() + 1);
-        dbManager.insertarCheque(cheque);
-        JOptionPane.showMessageDialog(this, "Cheque generado correctamente");
+    private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        if (jComboBoxElegirCuenta.getSelectedItem() == null || textFieldNumero.getText().isEmpty() || textFieldConcepto.getText().isEmpty() || textFieldProveedor.getText().isEmpty() || textFieldImporte.getText().isEmpty() || jComboBoxEstatus.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Por favor complete todos los campos");
+        } else {
+            cheque.setMaeCuenta(Long.parseLong(jComboBoxElegirCuenta.getSelectedItem().toString()));
+            cheque.setFecha(java.sql.Date.valueOf(textFieldFecha.getText()));
+            cheque.setNumero(Integer.parseInt(textFieldNumero.getText()));
+            cheque.setConcepto(textFieldConcepto.getText());
+            cheque.setMaeProveedor(Long.parseLong(textFieldProveedor.getText()));
+            cheque.setImporte(new java.math.BigDecimal(textFieldImporte.getText()));
+            cheque.setMaeEstatus(jComboBoxEstatus.getSelectedIndex() + 1);
+            cheque.setTipoTransaccion(jComboBoxTipoOperacion.getSelectedItem().toString());
+
+            dbManager.insertarCheque(cheque);
+            JOptionPane.showMessageDialog(this, "Cheque generado correctamente");
+        }
     }
 
     /**

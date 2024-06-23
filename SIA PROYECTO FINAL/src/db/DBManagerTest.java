@@ -23,6 +23,8 @@ public class DBManagerTest {
         Date fecha = Date.valueOf("2022-01-02");
         dbManager.insertarCheque(new Cheque(fecha, 215202022, 4, "concepto", 4001001, new BigDecimal("100"), 1, 1));
         System.out.println(dbManager.validarProveedorExiste(4001001));
+
+        dbManager.insertarTransaccion("Cheque");
     }
 
 }
