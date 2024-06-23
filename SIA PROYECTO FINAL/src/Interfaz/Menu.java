@@ -33,7 +33,6 @@ public class Menu extends javax.swing.JFrame {
         jButtonNuevoProveedor = new javax.swing.JButton();
         jButtonCuentasProveedor = new javax.swing.JButton();
         jButtonAdministrarCuentas1 = new javax.swing.JButton();
-        jButtonNuevoCheque1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,7 +58,7 @@ public class Menu extends javax.swing.JFrame {
                 jButtonNuevoBancoActionPerformed(evt);
             }
         });
-        background.add(jButtonNuevoBanco, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 160, 40));
+        background.add(jButtonNuevoBanco, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, 160, 40));
 
         jButtonNuevoCheque.setBackground(new java.awt.Color(0, 51, 255));
         jButtonNuevoCheque.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
@@ -70,7 +69,7 @@ public class Menu extends javax.swing.JFrame {
                 jButtonNuevoChequeActionPerformed(evt);
             }
         });
-        background.add(jButtonNuevoCheque, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, 160, 40));
+        background.add(jButtonNuevoCheque, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 160, 40));
 
         jButtonNuevoProveedor.setBackground(new java.awt.Color(0, 51, 255));
         jButtonNuevoProveedor.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
@@ -81,7 +80,7 @@ public class Menu extends javax.swing.JFrame {
                 jButtonNuevoProveedorActionPerformed(evt);
             }
         });
-        background.add(jButtonNuevoProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 160, 40));
+        background.add(jButtonNuevoProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, 160, 40));
 
         jButtonCuentasProveedor.setBackground(new java.awt.Color(0, 51, 255));
         jButtonCuentasProveedor.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
@@ -92,7 +91,7 @@ public class Menu extends javax.swing.JFrame {
                 jButtonCuentasProveedorActionPerformed(evt);
             }
         });
-        background.add(jButtonCuentasProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 140, 160, 40));
+        background.add(jButtonCuentasProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, 160, 40));
 
         jButtonAdministrarCuentas1.setBackground(new java.awt.Color(0, 51, 255));
         jButtonAdministrarCuentas1.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
@@ -103,18 +102,7 @@ public class Menu extends javax.swing.JFrame {
                 jButtonAdministrarCuentas1ActionPerformed(evt);
             }
         });
-        background.add(jButtonAdministrarCuentas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 260, 160, 40));
-
-        jButtonNuevoCheque1.setBackground(new java.awt.Color(0, 51, 255));
-        jButtonNuevoCheque1.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        jButtonNuevoCheque1.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonNuevoCheque1.setText("Generar Cheque");
-        jButtonNuevoCheque1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonNuevoCheque1ActionPerformed(evt);
-            }
-        });
-        background.add(jButtonNuevoCheque1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 160, 40));
+        background.add(jButtonAdministrarCuentas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 370, 160, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,7 +121,9 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonNuevoBancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoBancoActionPerformed
-        // TODO add your handling code here:
+        IngresarBanco ingresarBanco = new IngresarBanco();
+        ingresarBanco.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButtonNuevoBancoActionPerformed
 
     private void jButtonNuevoChequeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoChequeActionPerformed
@@ -143,11 +133,13 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonNuevoChequeActionPerformed
 
     private void jButtonNuevoProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoProveedorActionPerformed
-        // TODO add your handling code here:
+        IngresarProveedor ingresarProveedor = new IngresarProveedor();
+        ingresarProveedor.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButtonNuevoProveedorActionPerformed
 
     private void jButtonCuentasProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCuentasProveedorActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButtonCuentasProveedorActionPerformed
 
     private void jButtonAdministrarCuentas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdministrarCuentas1ActionPerformed
@@ -208,7 +200,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton jButtonCuentasProveedor;
     private javax.swing.JButton jButtonNuevoBanco;
     private javax.swing.JButton jButtonNuevoCheque;
-    private javax.swing.JButton jButtonNuevoCheque1;
     private javax.swing.JButton jButtonNuevoProveedor;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,9 @@
  */
 package Interfaz;
 
+import db.dbInicioSesion;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Edgardo Rivero
@@ -140,15 +143,42 @@ public class InicioSesion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void textFieldContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldContraseñaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textFieldContraseñaActionPerformed
+        try {
+            String contraseña = textFieldContraseña.getText();
+            if (contraseña.length() > 15) {
+            throw new IllegalArgumentException("La contraseña no puede tener más de 15 caracteres");
+            }
+            // Code to handle valid input
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    //GEN-LAST:event_textFieldContraseñaActionPerformed
 
     private void textFieldUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldUsuarioActionPerformed
-        // TODO add your handling code here:
+        try {
+            int usuario = Integer.parseInt(textFieldUsuario.getText());
+            if (usuario < 0) {
+                throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un valor entero válido para el usuario");
+        }
     }//GEN-LAST:event_textFieldUsuarioActionPerformed
 
     private void botonIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIniciarSesionActionPerformed
-        
+        String usuario = textFieldUsuario.getText();
+        int usuarioint = Integer.parseInt(usuario);
+        String contrasena = textFieldContraseña.getText();
+        dbInicioSesion dbInicioSesion = new dbInicioSesion();
+        if (dbInicioSesion.validarDatos(usuarioint, contrasena)) {
+            JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso");
+            Menu menuPrincipal = new Menu();
+            menuPrincipal.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Inicio de sesión fallido");
+        }
     }//GEN-LAST:event_botonIniciarSesionActionPerformed
 
     /**

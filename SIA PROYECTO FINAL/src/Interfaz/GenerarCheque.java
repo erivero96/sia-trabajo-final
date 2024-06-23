@@ -49,6 +49,7 @@ public class GenerarCheque extends javax.swing.JFrame {
         jComboBoxEstatus = new javax.swing.JComboBox<>();
         jComboBoxTipoOperacion = new javax.swing.JComboBox<>();
         jButtonAceptar = new javax.swing.JButton();
+        jButtonVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -210,7 +211,15 @@ public class GenerarCheque extends javax.swing.JFrame {
                 jButtonAceptarActionPerformed(evt);
             }
         });
-        background.add(jButtonAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 430, 120, 30));
+        background.add(jButtonAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 430, 120, 30));
+
+        jButtonVolver.setText("Volver");
+        jButtonVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVolverActionPerformed(evt);
+            }
+        });
+        background.add(jButtonVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 430, 120, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -225,6 +234,11 @@ public class GenerarCheque extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
+        this.dispose();
+        new Menu().setVisible(true);
+    }//GEN-LAST:event_jButtonVolverActionPerformed
 
     Cheque cheque = new Cheque();
     private void jComboBoxTipoOperacionActionPerformed(java.awt.event.ActionEvent evt) {                                                       
@@ -362,6 +376,7 @@ public class GenerarCheque extends javax.swing.JFrame {
     private javax.swing.JLabel Titulo;
     private javax.swing.JPanel background;
     private javax.swing.JButton jButtonAceptar;
+    private javax.swing.JButton jButtonVolver;
     private javax.swing.JComboBox<String> jComboBoxElegirCuenta;
     private javax.swing.JComboBox<String> jComboBoxEstatus;
     private javax.swing.JComboBox<String> jComboBoxTipoOperacion;
